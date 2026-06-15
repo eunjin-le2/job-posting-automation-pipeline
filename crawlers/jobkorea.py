@@ -56,17 +56,12 @@ LOCATION_KEYWORDS = [
 
 # ── 함수 ──────────────────────────────────────────
 def normalize_deadline(deadline):
-    """마감일 형식 통일 → YYYY-MM-DD"""
     if not deadline:
         return "상시채용"
     deadline = str(deadline).strip()
-
     if deadline in ["상시채용", "채용시", "상시", ""]:
         return "상시채용"
-
     today = datetime.now()
-
-    # ~6/5(금) 형식 (잡코리아)
     match = re.search(r'~(\d+)/(\d+)', deadline)
     if match:
         month = int(match.group(1))
@@ -75,7 +70,6 @@ def normalize_deadline(deadline):
         if month < today.month:
             year += 1
         return f"{year}-{month:02d}-{day:02d}"
-
     return deadline
 
 def extract_skills(text):
@@ -86,20 +80,14 @@ def is_excluded(title):
     return any(kw.lower() in title.lower() for kw in EXCLUDE_KEYWORDS)
 
 def parse_detail_page(page, url):
-    """상세 페이지에서 정보 추출"""
     try:
         page.goto(url, timeout=15000, wait_until="domcontentloaded")
-
         try:
             page.wait_for_selector("iframe[title='상세 모집 요강']", timeout=5000)
         except:
             pass
 
-        employment_type = ""
-        salary          = ""
-        location        = ""
-        deadline        = ""
-        experience      = ""
+        employment_type = salary = location = deadline = experience = ""
 
         try:
             spans = page.locator('span.whitespace-pre-wrap').all()
@@ -109,10 +97,8 @@ def parse_detail_page(page, url):
                 if text:
                     values.append(text)
 
-            # employment_type은 항상 index 1
             employment_type = values[1] if len(values) > 1 else ""
 
-            # 나머지는 키워드 기반 파싱
             for v in values[2:]:
                 if not experience and any(k in v for k in ["신입", "경력"]):
                     nums = re.findall(r'\d+', v)
@@ -128,11 +114,9 @@ def parse_detail_page(page, url):
                     deadline = normalize_deadline(v)
                 elif not deadline and v in ["상시채용", "채용시", "상시"]:
                     deadline = "상시채용"
-
         except:
             pass
 
-        # ── iframe 본문 파싱 (직접 접근) ──
         description = ""
         skills = ""
         try:
@@ -168,57 +152,51 @@ def parse_detail_page(page, url):
         }
 
 def parse_jobs_from_page(page, keyword):
-    """목록 페이지에서 공고 링크 수집"""
+    """목록 페이지에서 공고 링크 수집 - 카드 단위 파싱"""
     jobs = []
     seen = set()
 
-    title_links = page.locator('a[href*="/Recruit/GI_Read/"]').all()
-    company_spans = page.locator('span.text-typo-b2-16').all()
+    links = page.locator('a[href*="/Recruit/GI_Read/"]').all()
 
-    INVALID_COMPANIES = ["연관검색어", "전문채용관", "파워링크", "최근 검색어", "Skip to main content"]
-    
-    companies = []
-    for span in company_spans:
+    for link in links:
         try:
-            text = span.text_content(timeout=2000).strip()
-            if text and text not in INVALID_COMPANIES:
-                companies.append(text)
-        except:
-            pass
-
-    valid_links = []
-    for link in title_links:
-        try:
-            text = link.text_content(timeout=2000).strip()
             href = link.get_attribute('href') or ''
             rec_id = href.split('/Recruit/GI_Read/')[1].split('?')[0] if '/Recruit/GI_Read/' in href else ''
-            if text and rec_id and rec_id not in seen:
-                seen.add(rec_id)
-                valid_links.append((text, href, rec_id))
-        except:
-            pass
 
-    for i, (text, href, rec_id) in enumerate(valid_links):
-        company_idx = i + 1 if len(companies) > len(valid_links) else i
-        company = companies[company_idx] if company_idx < len(companies) else ""
-        full_url = f"https://www.jobkorea.co.kr/Recruit/GI_Read/{rec_id}"
-        jobs.append({
-            "title":   text,
-            "company": company,
-            "url":     full_url,
-            "keyword": keyword,
-        })
+            if not rec_id.isdigit() or rec_id in seen:
+                continue
+            seen.add(rec_id)
+
+            # 카드 단위로 묶기
+            card = link.locator('xpath=ancestor::div[1]')
+
+            # 제목 - truncate font-semibold text-typo-b1-18
+            title_el = card.locator('span.text-typo-b1-18').first
+            title = title_el.text_content(timeout=2000).strip() if title_el.count() > 0 else ''
+            if not title:
+                continue
+
+            # 회사명 - truncate text-gray700 text-typo-b2-16
+            company_el = card.locator('span.text-gray700.text-typo-b2-16').first
+            company = company_el.text_content(timeout=2000).strip() if company_el.count() > 0 else ''
+
+            full_url = f"https://www.jobkorea.co.kr/Recruit/GI_Read/{rec_id}"
+            jobs.append({
+                "title":   title,
+                "company": company,
+                "url":     full_url,
+                "keyword": keyword,
+            })
+
+        except Exception as e:
+            continue
 
     return jobs
 
 def crawl_keyword(page, keyword, max_pages=3):
-    """키워드별 크롤링"""
     all_jobs = []
-
     for page_num in range(1, max_pages + 1):
-        search_url = (
-            f"{BASE_URL}/Search/?stext={keyword}&tabType=recruit&Page_No={page_num}"
-        )
+        search_url = f"{BASE_URL}/Search/?stext={keyword}&tabType=recruit&Page_No={page_num}"
         try:
             page.goto(search_url, timeout=15000, wait_until="domcontentloaded")
             page.wait_for_timeout(2000)
@@ -242,7 +220,7 @@ def crawl_jobkorea(max_pages=3):
     final_jobs = []
 
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(headless=False)
         page    = browser.new_page()
 
         print("=== 1단계: 목록 수집 ===")
