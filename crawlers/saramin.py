@@ -180,8 +180,8 @@ def parse_jobs(html, keyword):
                     # location - a 태그 있는 span
                     if span.find("a") and not location:
                         location = " ".join([a.get_text(strip=True) for a in span.find_all("a")])
-                    # experience
-                    elif any(k in text for k in ["신입", "경력", "무관"]):
+                    # experience - 학력무관 제외
+                    elif any(k in text for k in ["신입", "경력"]) and "학력" not in text:
                         experience = text
                     # employment_type
                     elif any(k in text for k in ["정규직", "계약직", "인턴", "프리랜서", "파견직"]):
