@@ -178,3 +178,9 @@ python3.13 -m venv .venv
 | 로컬 환경 의존 → 절전 모드 시 crontab 미실행 | GCP VM / AWS EC2 클라우드 서버 이전 |
 | 키워드 기반 산업군 분류로 오분류 가능 | LLM 기반 분류로 개선 검토 |
 | 스킬 추출 표기 방식 다양 → 누락 가능 | NLP 기반 스킬 추출 고도화 |
+
+---
+
+## 시연 영상
+
+[![시연영상](https://img.youtube.com/vi/4VhyUd81Ueg/0.jpg)](https://youtu.be/4VhyUd81Ueg)
