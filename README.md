@@ -29,7 +29,7 @@
 
 ## 프로젝트 구조
 job-posting-automation-pipeline/
-
+```
 ├── crawlers/
 
 │   ├── wanted.py            # 원티드 JSON API 크롤러
@@ -57,7 +57,7 @@ job-posting-automation-pipeline/
 ├── requirements.txt
 
 └── README.md
-
+```
 ---
 
 ## 전체 워크플로우
@@ -155,7 +155,7 @@ python3.13 -m venv .venv
 | 플랫폼 | 문제 | 해결 |
 |--------|------|------|
 | 원티드 | React SPA로 HTML 스크래핑 불가 | 네트워크 탭 분석으로 내부 JSON API 발견 |
-| 사람인 | Playwright 봇 탐지 타임아웃 | 모바일 API 우회 → PC API 발견으로 전환 |
+| 사람인 | Playwright 봇 탐지 타임아웃 |  PC API 발견으로 전환 |
 | 잡코리아 | UI 요소가 회사명 클래스 공유 | INVALID_COMPANIES 필터링으로 해결 |
 | 잡코리아 | 급여 없는 공고에서 파싱 밀림 | 인덱스 기반 → 키워드 기반 파싱 전환 |
 | 잡코리아 | 검색 키워드마다 URL 파라미터 달라 중복 발생 | rec_id 추출로 URL 통일 |
@@ -169,7 +169,7 @@ python3.13 -m venv .venv
 
 | 한계점 | 개선 방향 |
 |--------|----------|
-| 사람인 description 수집 불가 (이미지 렌더링) | 공식 API 승인 후 수집 예정 |
+| 사람인 description 수집 불가 (이미지 렌더링) | OCR로 이미지를 텍스트 데이터로 변환해 description 추출 |
 | 로컬 환경 의존 → 절전 모드 시 crontab 미실행 | GCP VM / AWS EC2 클라우드 서버 이전 |
 | 키워드 기반 산업군 분류로 오분류 가능 | LLM 기반 분류로 개선 검토 |
 | 스킬 추출 표기 방식 다양 → 누락 가능 | NLP 기반 스킬 추출 고도화 |
