@@ -181,5 +181,6 @@ python3.13 -m venv .venv
 
 ---
 
-## 시연영상
-https://github.com/user-attachments/assets/4a29d70f-e1a3-441d-830d-d103db7e19a5
+## 시연 영상
+
+[![시연영상](https://img.youtube.com/vi/4VhyUd81Ueg/0.jpg)](https://youtu.be/4VhyUd81Ueg)
