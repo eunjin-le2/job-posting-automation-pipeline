@@ -128,7 +128,16 @@ python3.13 -m venv .venv
 ### 3. crontab 설정 (매일 09:30 자동 실행)
 
 ```bash
-30 9 * * * cd /Users/apple/projects/job-posting-automation-pipeline && /Users/apple/projects/job-posting-automation-pipeline/.venv/bin/python crawlers/wanted.py >> logs/cron.log 2>&1 && /Users/apple/projects/job-posting-automation-pipeline/.venv/bin/python crawlers/saramin.py >> logs/cron.log 2>&1 && /Users/apple/projects/job-posting-automation-pipeline/.venv/bin/python crawlers/jobkorea.py >> logs/cron.log 2>&1 && /Users/apple/projects/job-posting-automation-pipeline/.venv/bin/python crawlers/remember.py >> logs/cron.log 2>&1 && /Users/apple/projects/job-posting-automation-pipeline/.venv/bin/python crawlers/merge.py >> logs/cron.log 2>&1 && cp /Users/apple/projects/job-posting-automation-pipeline/data/all_jobs.csv /Users/apple/.n8n-files/all_jobs.csv >> logs/cron.log 2>&1 && cp /Users/apple/projects/job-posting-automation-pipeline/data/new_jobs.csv /Users/apple/.n8n-files/new_jobs.csv >> logs/cron.log 2>&1 && cp /Users/apple/projects/job-posting-automation-pipeline/data/active_jobs.csv /Users/apple/.n8n-files/active_jobs.csv >> logs/cron.log 2>&1 && echo "$(date) 파일 복사 완료" >> logs/cron.log 2>&1
+30 9 * * * cd /Users/apple/projects/job-posting-automation-pipeline
+&&/Users/apple/projects/job-posting-automation-pipeline/.venv/bin/python crawlers/wanted.py >> logs/cron.log 2>&1
+&& /Users/apple/projects/job-posting-automation-pipeline/.venv/bin/python crawlers/saramin.py >> logs/cron.log 2>&1
+&& /Users/apple/projects/job-posting-automation-pipeline/.venv/bin/python crawlers/jobkorea.py >> logs/cron.log 2>&1
+&& /Users/apple/projects/job-posting-automation-pipeline/.venv/bin/python crawlers/remember.py >> logs/cron.log 2>&1
+&& /Users/apple/projects/job-posting-automation-pipeline/.venv/bin/python crawlers/merge.py >> logs/cron.log 2>&1
+&& cp /Users/apple/projects/job-posting-automation-pipeline/data/all_jobs.csv /Users/apple/.n8n-files/all_jobs.csv >> logs/cron.log 2>&1
+&& cp /Users/apple/projects/job-posting-automation-pipeline/data/new_jobs.csv /Users/apple/.n8n-files/new_jobs.csv >> logs/cron.log 2>&1
+&& cp /Users/apple/projects/job-posting-automation-pipeline/data/active_jobs.csv /Users/apple/.n8n-files/active_jobs.csv >> logs/cron.log 2>&1 && echo "$(date) 파일 복사 완료" >> logs/cron.log 2>&1
+
 
 ```
 
