@@ -102,7 +102,7 @@ Sheets   Alert
 1. new_jobs.csv 파일을 읽어온다.
 2. 신규 공고가 존재하는 경우에만 후속 작업을 수행한다.
 3. JavaScript Code 노드에서 Discord 메시지 형식으로 가공한다.
-4. Discord Webhook을 통해 신규 채용공고를 실시간 전송한다
+4. Discord Webhook을 통해 신규 채용공고를 실시간 전송한다.
 
 ---
 
@@ -160,7 +160,7 @@ echo "$(date) 파일 복사 완료" >> logs/cron.log 2>&1
 - 금융·보험 산업군은 KPI 관리, 전략 수립, 고객 분석 중심의 비즈니스 분석 역할 비중이 높음
 - 이커머스·유통 산업군은 고객 행동 분석 및 Product Analytics 역량 수요가 높음
 - IT·플랫폼·SaaS 산업군은 데이터 파이프라인, 클라우드, AI 활용 역량 비중이 높음
-- 
+
 ---
 
 ## 주요 트러블슈팅
