@@ -29,8 +29,8 @@
 ---
 
 ## 프로젝트 구조
-job-posting-automation-pipeline/
 ```
+job-posting-automation-pipeline/
 ├── crawlers/
 │   ├── wanted.py            # 원티드 JSON API 크롤러
 │   ├── saramin.py           # 사람인 PC API 크롤러
