@@ -88,6 +88,7 @@ Sheets   Alert
 <img width="1283" height="331" alt="image" src="https://github.com/user-attachments/assets/9fe9f576-919e-439c-8dbe-26013a3e96ae" />
 데이터 분석 관련 채용공고를 4개 플랫폼에서 수집하고,
 정제 파이프라인을 거쳐 Google Sheets와 Discord로 자동 배포하는 구조로 설계했습니다.
+
 ---
 
 ## 환경 설정
