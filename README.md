@@ -83,6 +83,8 @@ Google   Discord
 Sheets   Alert
 
 ```
+<img width="1283" height="331" alt="image" src="https://github.com/user-attachments/assets/9fe9f576-919e-439c-8dbe-26013a3e96ae" />
+
 ---
 
 ## 환경 설정
