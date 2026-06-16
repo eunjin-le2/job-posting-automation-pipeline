@@ -7,16 +7,6 @@
 
 ---
 
-## 주요 기능
-
-- 4개 플랫폼 채용공고 매일 자동 수집 (09:30 crontab)
-- 산업군 자동 분류 (8개 산업군)
-- 스킬 키워드 자동 추출 (43개)
-- 신규 공고 탐지 및 Discord 실시간 알림
-- Google Sheets 자동 업데이트
-
----
-
 ## 기술 스택
 
 ![Python](https://img.shields.io/badge/Python-3.13-3776AB?style=flat&logo=python&logoColor=white)
@@ -48,14 +38,14 @@ job-posting-automation-pipeline/
 ```
 ---
 
-## 전체 워크플로우
+## 파이프라인 구조
 
-| 단계 | 설명 |
-|------|------|
-| 🔍 수집 (09:30 crontab) | 원티드 API · 사람인 API · 잡코리아 Playwright · 리멤버 API |
-| 🔧 정제 (merge.py) | 컬럼 통일 → 중복 제거 → 산업군 분류 → 스킬 추출 → 경력 수치화 → 마감 공고 제거 → 신규 공고 탐지 |
-| 💾 저장 | all_jobs.csv · active_jobs.csv · new_jobs.csv |
-| 🤖 자동화 (10:00 n8n) | Google Sheets 업데이트 → Discord 알림 |
+| 단계 | 내용 | 결과 |
+|------|------|------|
+| 🔍 **수집** (09:30 crontab) | 원티드 API · 사람인 API · 잡코리아 Playwright · 리멤버 API | 플랫폼별 CSV 저장 |
+| 🔧 **정제** (merge.py) | 컬럼 통일 → 중복 제거 → 산업군 분류 (10개) → 스킬 추출 (43개) → 경력 수치화 → 마감 공고 제거 → 신규 공고 탐지 | all_jobs.csv · active_jobs.csv · new_jobs.csv |
+| 🤖 **자동화** (10:00 n8n) | Google Sheets 전체 갱신 → Discord 신규 공고 알림 | 실시간 모니터링 |
+
 
 ---
 
@@ -99,13 +89,9 @@ python3.13 -m venv .venv
 
 ## 데이터 수집 현황 (2026.06.12 기준)
 
-| 항목 | 수치 |
-|------|------|
-| 총 수집 공고 | 430개 |
-| 플랫폼 수 | 4개 |
-| 산업군 분류 | 10개 |
-| 스킬 키워드 | 43개 |
-| SQL 요구 비율 | 50.7% |
+| 총 공고 | 플랫폼 | 산업군 | 스킬 키워드 | SQL 요구 비율 |
+|--------|--------|--------|------------|-------------|
+| 430개 | 4개 | 10개 | 43개 | 50.7% |
 
 ---
 
@@ -115,7 +101,7 @@ python3.13 -m venv .venv
 |--------|------|------|
 | 원티드 | React SPA로 HTML 스크래핑 불가 | 네트워크 탭 분석으로 내부 JSON API 발견 |
 | 사람인 | Playwright 봇 탐지 타임아웃 |  PC API 발견으로 전환 |
-| 잡코리아 | UI 요소가 회사명 클래스 공유 | INVALID_COMPANIES 필터링으로 해결 |
+| 잡코리아 | UI 요소가 회사명 클래스 공유 | 카드 단위 파싱으로 전환 |
 | 잡코리아 | 급여 없는 공고에서 파싱 밀림 | 인덱스 기반 → 키워드 기반 파싱 전환 |
 | 잡코리아 | 검색 키워드마다 URL 파라미터 달라 중복 발생 | rec_id 추출로 URL 통일 |
 | n8n | Clear sheet 420번 반복 실행 → API 초과 | Clear 노드를 Extract from File 앞으로 이동 |
