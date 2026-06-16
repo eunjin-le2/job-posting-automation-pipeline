@@ -19,34 +19,13 @@
 
 ## 기술 스택
 
-| 분류 | 기술 |
-|------|------|
-| 언어 | Python 3.13 |
-| 크롤링 | Playwright · BeautifulSoup · requests |
-| 데이터 처리 | Pandas |
-| 자동화 | n8n · crontab |
-| 알림 | Discord Webhook |
-| 저장 | Google Sheets · CSV |
+![Python](https://img.shields.io/badge/Python-3.13-3776AB?style=flat&logo=python&logoColor=white)
+![Playwright](https://img.shields.io/badge/Playwright-45ba4b?style=flat&logo=playwright&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat&logo=pandas&logoColor=white)
+![n8n](https://img.shields.io/badge/n8n-EA4B71?style=flat&logo=n8n&logoColor=white)
+![Google Sheets](https://img.shields.io/badge/Google_Sheets-34A853?style=flat&logo=googlesheets&logoColor=white)
+![Discord](https://img.shields.io/badge/Discord-5865F2?style=flat&logo=discord&logoColor=white)
 
-## 기술 스택
-
-| 분류 | 기술 |
-|------|------|
-| 언어 | Python 3.13 |
-| 크롤링 | Playwright · BeautifulSoup · requests |
-| 데이터 처리 | Pandas |
-| 자동화 | n8n · crontab |
-| 알림 | Discord Webhook |
-| 저장 | Google Sheets · CSV |
-
-## 전체 워크플로우
-
-| 단계 | 설명 |
-|------|------|
-| 🔍 수집 (09:30 crontab) | 원티드 API · 사람인 API · 잡코리아 Playwright · 리멤버 API |
-| 🔧 정제 (merge.py) | 컬럼 통일 → 중복 제거 → 산업군 분류 → 스킬 추출 → 경력 수치화 → 마감 공고 제거 → 신규 공고 탐지 |
-| 💾 저장 | all_jobs.csv · active_jobs.csv · new_jobs.csv |
-| 🤖 자동화 (10:00 n8n) | Google Sheets 업데이트 → Discord 알림 |
 ---
 
 ## 프로젝트 구조
@@ -70,37 +49,13 @@ job-posting-automation-pipeline/
 ---
 
 ## 전체 워크플로우
-[수집] 09:30 crontab
 
-원티드 API        → wanted_jobs.csv
-사람인 API        → saramin_jobs.csv
-잡코리아 Playwright → jobkorea_jobs.csv
-리멤버 API        → remember_jobs.csv
-
-↓
-
-[정제] merge.py
-
-① 컬럼 통일 및 BOM 제거
-② URL 기준 중복 제거
-③ company + title 기준 중복 제거
-④ 산업군 자동 분류
-⑤ 스킬 키워드 추출 (43개)
-⑥ 경력 수치화
-⑦ 마감 공고 제거
-⑧ 신규 공고 탐지 (전날 URL 비교)
-
-↓
-
-[저장]
-
-all_jobs.csv / active_jobs.csv / new_jobs.csv
-
-↓
-
-[자동화] 10:00 n8n
-
-Google Sheets 업데이트 → Discord 알림
+| 단계 | 설명 |
+|------|------|
+| 🔍 수집 (09:30 crontab) | 원티드 API · 사람인 API · 잡코리아 Playwright · 리멤버 API |
+| 🔧 정제 (merge.py) | 컬럼 통일 → 중복 제거 → 산업군 분류 → 스킬 추출 → 경력 수치화 → 마감 공고 제거 → 신규 공고 탐지 |
+| 💾 저장 | all_jobs.csv · active_jobs.csv · new_jobs.csv |
+| 🤖 자동화 (10:00 n8n) | Google Sheets 업데이트 → Discord 알림 |
 
 ---
 
@@ -149,31 +104,6 @@ python3.13 -m venv .venv
 | 총 수집 공고 | 430개 |
 | 플랫폼 수 | 4개 |
 | 산업군 분류 | 10개 |
-
-**크롤링**
-![Python](https://img.shields.io/badge/Python-3.13-3776AB?style=flat&logo=python&logoColor=white)
-![Playwright](https://img.shields.io/badge/Playwright-45ba4b?style=flat&logo=playwright&logoColor=white)
-![BeautifulSoup](https://img.shields.io/badge/BeautifulSoup-59666C?style=flat)
-![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat&logo=pandas&logoColor=white)
-
-**자동화 · 알림**
-![n8n](https://img.shields.io/badge/n8n-EA4B71?style=flat&logo=n8n&logoColor=white)
-![Google Sheets](https://img.shields.io/badge/Google_Sheets-34A853?style=flat&logo=googlesheets&logoColor=white)
-![Discord](https://img.shields.io/badge/Discord-5865F2?style=flat&logo=discord&logoColor=white)
-방법 1이나 방법 2 중에 어떤 게 마음에 드세요?
-
-## 기술 스택
-
-![Python](https://img.shields.io/badge/Python-3.13-3776AB?style=flat&logo=python&logoColor=white)
-![Playwright](https://img.shields.io/badge/Playwright-45ba4b?style=flat&logo=playwright&logoColor=white)
-![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat&logo=pandas&logoColor=white)
-![n8n](https://img.shields.io/badge/n8n-EA4B71?style=flat&logo=n8n&logoColor=white)
-![Google Sheets](https://img.shields.io/badge/Google_Sheets-34A853?style=flat&logo=googlesheets&logoColor=white)
-![Discord](https://img.shields.io/badge/Discord-5865F2?style=flat&logo=discord&logoColor=white)
-
-
-Claude Fable 5 is currently unavailable.
-
 | 스킬 키워드 | 43개 |
 | SQL 요구 비율 | 50.7% |
 
