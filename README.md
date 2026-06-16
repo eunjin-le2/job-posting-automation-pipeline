@@ -1,4 +1,7 @@
 # 📊 데이터 분석가 채용공고 자동화 파이프라인
+## 시연 영상
+
+[![시연영상](https://img.youtube.com/vi/4VhyUd81Ueg/0.jpg)](https://youtu.be/4VhyUd81Ueg)
 
 4개 채용 플랫폼(원티드, 사람인, 잡코리아, 리멤버)에서 데이터 분석가 채용공고를 매일 자동 수집·정제·분류·알림하는 End-to-End 파이프라인입니다.
 
@@ -31,31 +34,18 @@
 job-posting-automation-pipeline/
 ```
 ├── crawlers/
-
 │   ├── wanted.py            # 원티드 JSON API 크롤러
-
 │   ├── saramin.py           # 사람인 PC API 크롤러
-
 │   ├── jobkorea.py          # 잡코리아 Playwright 크롤러
-
 │   ├── remember.py          # 리멤버 POST API 크롤러
-
 │   └── merge.py             # 데이터 정제 파이프라인
-
 ├── analysis/
-
 │   ├── 01_crawling_discovery.ipynb   # API 발견 과정
-
 │   └── 02_job_analysis.ipynb         # 채용공고 데이터 분석
-
 ├── data/
-
 │   └── active_jobs_06.11.csv         # 수집 데이터 샘플
-
 ├── logs/
-
 ├── requirements.txt
-
 └── README.md
 ```
 ---
@@ -64,11 +54,8 @@ job-posting-automation-pipeline/
 [수집] 09:30 crontab
 
 원티드 API        → wanted_jobs.csv
-
 사람인 API        → saramin_jobs.csv
-
 잡코리아 Playwright → jobkorea_jobs.csv
-
 리멤버 API        → remember_jobs.csv
 
 ↓
@@ -76,19 +63,12 @@ job-posting-automation-pipeline/
 [정제] merge.py
 
 ① 컬럼 통일 및 BOM 제거
-
 ② URL 기준 중복 제거
-
 ③ company + title 기준 중복 제거
-
 ④ 산업군 자동 분류
-
 ⑤ 스킬 키워드 추출 (43개)
-
 ⑥ 경력 수치화
-
 ⑦ 마감 공고 제거
-
 ⑧ 신규 공고 탐지 (전날 URL 비교)
 
 ↓
@@ -179,8 +159,3 @@ python3.13 -m venv .venv
 | 키워드 기반 산업군 분류로 오분류 가능 | LLM 기반 분류로 개선 검토 |
 | 스킬 추출 표기 방식 다양 → 누락 가능 | NLP 기반 스킬 추출 고도화 |
 
----
-
-## 시연 영상
-
-[![시연영상](https://img.youtube.com/vi/4VhyUd81Ueg/0.jpg)](https://youtu.be/4VhyUd81Ueg)
