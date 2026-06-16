@@ -83,11 +83,26 @@ Google   Discord
 Sheets   Alert
 
 ```
+데이터 분석 관련 채용공고를 4개 플랫폼에서 수집하고,
+정제 파이프라인을 거쳐 Google Sheets와 Discord로 자동 배포하는 구조로 설계했습니다.
+
 ## n8n 워크플로우
 
 <img width="1283" height="331" alt="image" src="https://github.com/user-attachments/assets/9fe9f576-919e-439c-8dbe-26013a3e96ae" />
-데이터 분석 관련 채용공고를 4개 플랫폼에서 수집하고,
-정제 파이프라인을 거쳐 Google Sheets와 Discord로 자동 배포하는 구조로 설계했습니다.
+
+### 상단 플로우 (전체 공고 관리)
+
+1. active_jobs.csv 파일을 읽어온다.
+2. 기존 Google Sheets 데이터를 초기화한다.
+3. 최신 채용공고 데이터를 시트에 일괄 업로드한다.
+4. 필터 및 대시보드에서 활용할 수 있도록 데이터 상태를 최신으로 유지한다.
+
+### 하단 플로우 (신규 공고 알림)
+
+1. new_jobs.csv 파일을 읽어온다.
+2. 신규 공고가 존재하는 경우에만 후속 작업을 수행한다.
+3. JavaScript Code 노드에서 Discord 메시지 형식으로 가공한다.
+4. Discord Webhook을 통해 신규 채용공고를 실시간 전송한다
 
 ---
 
