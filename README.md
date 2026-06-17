@@ -83,6 +83,8 @@ Google   Discord
 Sheets   Alert
 
 ```
+<img width="8114" height="2688" alt="image" src="https://github.com/user-attachments/assets/ab76476b-6ead-4f09-8b17-cc7ad1a6984d" />
+
 데이터 분석 관련 채용공고를 4개 플랫폼에서 수집하고,
 정제 파이프라인을 거쳐 Google Sheets와 Discord로 자동 배포하는 구조로 설계했습니다.
 
