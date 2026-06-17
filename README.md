@@ -56,33 +56,6 @@ job-posting-automation-pipeline/
 
 ## 🏗️ 아키텍처
 
-```text
-Wanted API
-Saramin API
-JobKorea Playwright
-Remember API
-        │
-        ▼
-    Crawlers
-        │
-        ▼
-     merge.py
-        │
-        ▼
- ┌─────────────┐
- │ active_jobs │
- │  new_jobs   │
- │  all_jobs   │
- └─────────────┘
-        │
-        ▼
-       n8n
-    ┌───────┐
-    ▼       ▼
-Google   Discord
-Sheets   Alert
-
-```
 <img width="8114" height="2688" alt="image" src="https://github.com/user-attachments/assets/ab76476b-6ead-4f09-8b17-cc7ad1a6984d" />
 
 데이터 분석 관련 채용공고를 4개 플랫폼에서 수집하고,
